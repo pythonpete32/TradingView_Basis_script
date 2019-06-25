@@ -1,0 +1,25 @@
+//@version=1
+//replace [] with the futures contract you want to see the basis for
+// XBTM19 = june, XBTU19 = september, XBTZ19 =december
+// or search the trading view plugins for the specific month and it will come up 
+study("[] Basis")
+ 
+basis=security("[]-XBTUSD",period,close)
+ 
+basiscolor = close >= 0 ? green : red
+ 
+Pos = if(basis>=0)
+    0
+    basis
+ 
+Neg = if(basis<0)
+    0
+    basis
+ 
+ 
+Posp = plot(Pos, color = basiscolor,style=area,transp=100,title='Positive')
+Negp = plot(Neg, color = basiscolor,style=line,transp=100,title='Negative')
+ 
+zline = plot(0, title="zero line")
+fill(Posp, zline, color = red, transp = 20)
+fill(Negp, zline, color = green, transp = 20)
